@@ -1,10 +1,15 @@
 from contextlib import AbstractContextManager
 from langgraph.checkpoint.postgres import PostgresSaver
+import psycopg
 
 class CheckpointRepository:
     """Owns the PostgreSQL-backed LangGraph checkpointer lifecycle."""
     def __init__(self, database_uri: str):
-        self._context: AbstractContextManager = PostgresSaver.from_conn_string(database_uri)
+        with psycopg.connect(database_uri, autocommit=True) as connection:
+            connection.execute("CREATE SCHEMA IF NOT EXISTS langgraph")
+        separator = "&" if "?" in database_uri else "?"
+        checkpoint_uri = f"{database_uri}{separator}options=-csearch_path%3Dlanggraph"
+        self._context: AbstractContextManager = PostgresSaver.from_conn_string(checkpoint_uri)
         self.saver = None
 
     def open(self):
@@ -14,4 +19,3 @@ class CheckpointRepository:
 
     def close(self) -> None:
         self._context.__exit__(None, None, None)
-
