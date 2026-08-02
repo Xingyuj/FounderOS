@@ -2,7 +2,7 @@
 
 ## State
 
-FounderOS Milestone 1 is complete and evidence-backed as of 2026-08-02. Work is committed incrementally on `main`; nothing was pushed.
+FounderOS Milestone 1 is complete and evidence-backed as of 2026-08-02. The founder has approved the M2 Slack Team Experience direction and its specification is now documented. M2 implementation has not started.
 
 ## Work completed
 
@@ -35,4 +35,4 @@ Implementation lives under `backend/`, `orchestrator/`, and `scripts/`; reposito
 
 ## Exact next action
 
-Plan Milestone 2's Slack interaction and security contract. Do not add Slack code before that scope decision.
+Review the deferred implementation choices in `FOUNDER_OS_M2.md`, then implement the persistence model and security-first Slack ingress. Preserve the small roster, one-accountable-owner rule, Spring authority boundary, and asynchronous inbox/outbox requirement.

@@ -47,3 +47,21 @@ The backend generates `project-<project UUID>` and persists it on Project, Found
 **Status:** Implemented
 
 M1 uses synchronous backend-to-orchestrator HTTP. If start or resume fails, Project and WorkflowRun are marked FAILED with an audit message; automatic reconciliation is deferred. Java's simple HTTP/1.1 request factory is used for predictable FastAPI request-body delivery.
+
+## DEC-009 — Slack is the FounderOS team workspace
+
+**Status:** Approved
+
+M2 presents FounderOS as a small team inside Slack rather than as a single approval-notification bot. The experience includes functional and project channels, direct interaction with named agent roles, and a Chief of Staff who serves as the founder's default coordinator.
+
+## DEC-010 — Core M2 agent roster
+
+**Status:** Approved
+
+M2 starts with Chief of Staff, Product Lead, Research Analyst, Engineering Lead, and Growth Lead. Each task has exactly one accountable agent. Additional agents and unrestricted delegation are deferred until the core interaction and authority model is proven.
+
+## DEC-011 — Durable Slack team semantics
+
+**Status:** Approved
+
+Slack is a human-facing transport and workspace, not the source of truth. Spring Boot owns conversations, tasks, assignments, decisions, messages, and artifacts. Slack processing must be verified, authorized, asynchronous, restart-safe, and idempotent. The orchestrator neither owns business history nor sends Slack messages directly.

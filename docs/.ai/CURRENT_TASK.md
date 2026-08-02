@@ -2,11 +2,11 @@
 
 ## Objective
 
-Implement `FOUNDER_OS_M1.md` from a newly created or minimally populated repository.
+Define Milestone 2 as a Slack Team Experience in which the founder collaborates through functional/project channels and direct messages with a small agent team coordinated by a Chief of Staff.
 
 ## Current status
 
-Complete on 2026-08-02. Milestone 1 satisfies its Definition of Done: both services start, PostgreSQL-backed interrupt state survives process restart, the API completes the idea-to-Product-Brief path, automated tests pass, and the smoke test passes.
+M1 remains complete. On 2026-08-02 the founder approved the M2 product direction and `FOUNDER_OS_M2.md` was written. M2 implementation has not started.
 
 ## Implementation plan
 
@@ -41,4 +41,4 @@ The founder can create a project over HTTP, observe a persisted open decision, r
 
 ## Exact next task
 
-Milestone 2 planning: define the Slack interaction contract and security model before adding any Slack dependency or endpoint.
+Review and freeze the deferred Slack implementation choices in `FOUNDER_OS_M2.md`, especially the Slack-supported DM/persona model and resulting least-privilege OAuth scopes. Then implement the M2 persistence model and security-first Slack ingress; do not begin with agent intelligence or Slack message generation.
