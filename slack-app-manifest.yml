@@ -1,0 +1,30 @@
+display_information:
+  name: FounderOS
+  description: Human-facing workspace for the FounderOS agent team
+  background_color: "#1f2937"
+features:
+  bot_user:
+    display_name: FounderOS
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - app_mentions:read
+      - channels:history
+      - groups:history
+      - im:history
+      - chat:write
+settings:
+  event_subscriptions:
+    request_url: https://replace-with-your-host.example/integrations/slack/events
+    bot_events:
+      - app_mention
+      - message.channels
+      - message.groups
+      - message.im
+  interactivity:
+    is_enabled: true
+    request_url: https://replace-with-your-host.example/integrations/slack/interactions
+  org_deploy_enabled: false
+  socket_mode_enabled: false
+  token_rotation_enabled: false

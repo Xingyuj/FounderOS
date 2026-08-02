@@ -38,7 +38,10 @@ cd orchestrator && .venv/bin/pytest
 
 ## Known limitations
 
-M1 has deterministic content and intentionally has no authentication, UI, LLM integration, notifications, or deployment configuration. Backend coordination uses synchronous HTTP. If resume fails after a founder response is recorded, the run is marked failed for auditability; automatic retry/reconciliation is deferred.
+Agent responses remain deterministic; specialist LLM reasoning, autonomous tools, general user authentication, and deployment configuration are deferred. Slack supports one allow-listed workspace and founder, uses environment-based credentials for local operation, and requires a public HTTPS callback for real workspace use. Backend-to-orchestrator coordination is still synchronous; Slack transport itself is isolated through restart-safe PostgreSQL inbox/outbox queues.
 
 See [architecture](docs/architecture.md), [API](docs/api.md), and [milestones](docs/milestones.md).
 
+## Milestone 2 Slack team
+
+M2 adds a durable Slack team surface with Chief of Staff, Product Lead, Research Analyst, Engineering Lead, and Growth Lead personas. Slack messages become persisted tasks through a verified inbox; responses and decision updates use a restart-safe outbox. See the [M2 specification](docs/FOUNDER_OS_M2.md) and [Slack setup guide](docs/slack-setup.md).

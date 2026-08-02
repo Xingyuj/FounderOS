@@ -65,3 +65,21 @@ M2 starts with Chief of Staff, Product Lead, Research Analyst, Engineering Lead,
 **Status:** Approved
 
 Slack is a human-facing transport and workspace, not the source of truth. Spring Boot owns conversations, tasks, assignments, decisions, messages, and artifacts. Slack processing must be verified, authorized, asynchronous, restart-safe, and idempotent. The orchestrator neither owns business history nor sends Slack messages directly.
+
+## DEC-012 — Single Slack App with explicit personas
+
+**Status:** Implemented
+
+One installed FounderOS bot represents all M2 agents. Each outbound message visibly names its accountable persona. Direct messages select a specialist with an explicit English or Chinese role prefix; an unaddressed DM routes to Chief of Staff. Multiple bot installations and misleading Slack authorship are rejected.
+
+## DEC-013 — PostgreSQL inbox and outbox
+
+**Status:** Implemented
+
+Slack ingress persists a unique event before acknowledgement. Separate database-backed workers route inbound work and deliver outbound `chat.postMessage` or `chat.update` operations. This meets M2 restart and retry requirements without introducing Redis or Kafka.
+
+## DEC-014 — Least-privilege invited-channel Slack access
+
+**Status:** Implemented
+
+The app requests only `app_mentions:read`, `channels:history`, `groups:history`, `im:history`, and `chat:write`. It does not request `chat:write.public`; the founder must explicitly invite FounderOS to working channels and then bind their immutable Slack IDs in FounderOS.

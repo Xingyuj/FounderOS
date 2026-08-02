@@ -24,3 +24,16 @@ Spring Boot is authoritative for projects, founder decisions, artifacts, and wor
 4. Spring stores Product Brief version 1 and marks the run and project completed.
 
 Database constraints enforce valid states, foreign keys, a unique thread per run, and one artifact version per project/type. Duplicate decision resolution is rejected before resume. Slack and model calls are excluded because M1 validates durable human-in-the-loop control flow, not channel or content quality.
+
+## M2 Slack boundary
+
+Slack calls only the Spring Boot integration endpoints. The backend verifies the raw signed request, authorizes the configured workspace and founder, and persists a unique inbox event before acknowledging. A scheduled worker routes the event into authoritative Conversation and Task records. A separate outbox record is then delivered with `chat.postMessage` or `chat.update`. Interrupted claims are restored after restart and transient failures use bounded retry.
+
+```text
+Slack -> verified Spring ingress -> PostgreSQL inbox -> routing worker
+                                                |          |
+                                                v          v
+                                       conversation/task  outbox -> Slack Web API
+```
+
+The Python orchestrator remains unaware of Slack credentials and delivery. It is called only when an accepted Slack decision action resumes an existing workflow.

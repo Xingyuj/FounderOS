@@ -6,7 +6,7 @@ Define Milestone 2 as a Slack Team Experience in which the founder collaborates 
 
 ## Current status
 
-M1 remains complete. On 2026-08-02 the founder approved the M2 product direction and `FOUNDER_OS_M2.md` was written. M2 implementation has not started.
+M1 remains complete. The local M2 Slack Team Experience implementation is complete and automated tests pass. Real Slack workspace installation and delivery remain unverified because credentials and a public HTTPS callback were not available.
 
 ## Implementation plan
 
@@ -39,6 +39,13 @@ The founder can create a project over HTTP, observe a persisted open decision, r
 - `./scripts/smoke-test.sh`: PASS with project `6ed929bd-a3b8-4945-a221-5118cd73dbcc` and matching persisted workflow thread.
 - Restart proof: project `0f25cf3d-e99e-409c-9eab-2811b8653337` paused, both application processes restarted, then decision `fcb7b9b2-3b82-4b91-868b-993a2882cbb9` resumed to COMPLETED.
 
+## M2 implementation choices
+
+- One FounderOS Slack App represents five visible agent personas; DMs select a specialist through an explicit English or Chinese role prefix and otherwise route to Chief of Staff.
+- No slash command is required. M2 uses channel messages, app mentions, DMs, and interactive decision buttons.
+- Bot scopes are `app_mentions:read`, `channels:history`, `groups:history`, `im:history`, and `chat:write`; the app must be invited into every working channel.
+- PostgreSQL inbox/outbox workers provide asynchronous processing, idempotency, retry, and restart recovery without Redis or Kafka.
+
 ## Exact next task
 
-Review and freeze the deferred Slack implementation choices in `FOUNDER_OS_M2.md`, especially the Slack-supported DM/persona model and resulting least-privilege OAuth scopes. Then implement the M2 persistence model and security-first Slack ingress; do not begin with agent intelligence or Slack message generation.
+Install the manifest in the founder's Slack workspace, configure `SLACK_SIGNING_SECRET`, `SLACK_BOT_TOKEN`, `SLACK_TEAM_ID`, `SLACK_FOUNDER_USER_ID`, and `SLACK_ADMIN_TOKEN`, expose the two signed ingress endpoints over HTTPS, bind initial channels, and run a real Slack smoke test.
