@@ -1,0 +1,1 @@
+package com.founderos.backend.repository; import com.founderos.backend.domain.WorkflowRun; import org.springframework.data.jpa.repository.JpaRepository; import java.util.*; public interface WorkflowRunRepository extends JpaRepository<WorkflowRun, UUID>{Optional<WorkflowRun> findByProjectId(UUID projectId);}

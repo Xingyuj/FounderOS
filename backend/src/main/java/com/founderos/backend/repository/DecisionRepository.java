@@ -1,0 +1,1 @@
+package com.founderos.backend.repository; import com.founderos.backend.domain.*; import org.springframework.data.jpa.repository.JpaRepository; import java.util.*; public interface DecisionRepository extends JpaRepository<FounderDecision, UUID>{List<FounderDecision> findByProjectIdOrderByCreatedAtAsc(UUID projectId);}
