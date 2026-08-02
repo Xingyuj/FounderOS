@@ -24,9 +24,9 @@ public class SlackIngressController {
     @PostMapping(value = "/events", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> events(@RequestHeader("X-Slack-Request-Timestamp") String timestamp,
                                     @RequestHeader("X-Slack-Signature") String signature,
-                                    @RequestBody String rawBody) throws JsonProcessingException {
+                                    @RequestBody String rawBody) {
         verifier.verify(timestamp, signature, rawBody);
-        JsonNode body = mapper.readTree(rawBody);
+        JsonNode body = parse(rawBody);
         requireTeam(body.path("team_id").asText());
         if ("url_verification".equals(body.path("type").asText())) return ResponseEntity.ok(Map.of("challenge", body.path("challenge").asText()));
         if (!"event_callback".equals(body.path("type").asText())) return ResponseEntity.ok(Map.of("accepted", false, "reason", "unsupported_envelope"));
@@ -46,10 +46,10 @@ public class SlackIngressController {
     @PostMapping(value = "/interactions", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<?> interactions(@RequestHeader("X-Slack-Request-Timestamp") String timestamp,
                                           @RequestHeader("X-Slack-Signature") String signature,
-                                          @RequestBody String rawBody) throws JsonProcessingException {
+                                          @RequestBody String rawBody) {
         verifier.verify(timestamp, signature, rawBody);
         String payloadText = formValue(rawBody, "payload").orElseThrow(() -> new IllegalArgumentException("Missing Slack interaction payload"));
-        JsonNode payload = mapper.readTree(payloadText);
+        JsonNode payload = parse(payloadText);
         requireTeam(payload.path("team").path("id").asText());
         requireFounder(payload.path("user").path("id").asText());
         JsonNode action = payload.path("actions").path(0);
@@ -80,4 +80,5 @@ public class SlackIngressController {
         try { return java.util.HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(value.getBytes(StandardCharsets.UTF_8))); }
         catch (Exception e) { throw new IllegalStateException("Unable to hash Slack interaction", e); }
     }
+    private JsonNode parse(String value) { try { return mapper.readTree(value); } catch (JsonProcessingException e) { throw new IllegalArgumentException("Malformed Slack payload"); } }
 }

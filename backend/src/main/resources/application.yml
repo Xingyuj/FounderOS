@@ -24,5 +24,6 @@ slack:
   bot-token: ${SLACK_BOT_TOKEN:}
   team-id: ${SLACK_TEAM_ID:}
   founder-user-id: ${SLACK_FOUNDER_USER_ID:}
+  admin-token: ${SLACK_ADMIN_TOKEN:}
   signature-tolerance-seconds: ${SLACK_SIGNATURE_TOLERANCE_SECONDS:300}
   max-attempts: ${SLACK_MAX_ATTEMPTS:5}

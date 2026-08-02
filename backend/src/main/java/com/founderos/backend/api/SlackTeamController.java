@@ -10,9 +10,9 @@ import java.util.*;
 public class SlackTeamController {
     private final SlackTeamService service;
     public SlackTeamController(SlackTeamService service) { this.service = service; }
-    @GetMapping("/slack/agents") public List<AgentView> agents() { return service.agents(); }
-    @PutMapping("/slack/channels/{channelId}") public ChannelBindingView bind(@PathVariable String channelId, @Valid @RequestBody BindChannelRequest request) { return service.bind(channelId, request); }
-    @GetMapping("/tasks/{id}") public TaskView task(@PathVariable UUID id) { return service.task(id); }
-    @GetMapping("/tasks") public List<TaskView> tasks() { return service.tasks(); }
-    @PostMapping("/slack/decisions/{id}/publish") public PublishDecisionResponse publish(@PathVariable UUID id, @Valid @RequestBody PublishDecisionRequest request) { return service.publishDecision(id, request); }
+    @GetMapping("/slack/agents") public List<AgentView> agents(@RequestHeader("X-FounderOS-Admin-Token") String token) { service.authorizeAdmin(token); return service.agents(); }
+    @PutMapping("/slack/channels/{channelId}") public ChannelBindingView bind(@RequestHeader("X-FounderOS-Admin-Token") String token, @PathVariable String channelId, @Valid @RequestBody BindChannelRequest request) { service.authorizeAdmin(token); return service.bind(channelId, request); }
+    @GetMapping("/tasks/{id}") public TaskView task(@RequestHeader("X-FounderOS-Admin-Token") String token, @PathVariable UUID id) { service.authorizeAdmin(token); return service.task(id); }
+    @GetMapping("/tasks") public List<TaskView> tasks(@RequestHeader("X-FounderOS-Admin-Token") String token) { service.authorizeAdmin(token); return service.tasks(); }
+    @PostMapping("/slack/decisions/{id}/publish") public PublishDecisionResponse publish(@RequestHeader("X-FounderOS-Admin-Token") String token, @PathVariable UUID id, @Valid @RequestBody PublishDecisionRequest request) { service.authorizeAdmin(token); return service.publishDecision(id, request); }
 }

@@ -11,6 +11,7 @@ public class SlackProperties {
     private String botToken = "";
     private String teamId = "";
     private String founderUserId = "";
+    private String adminToken = "";
     private long signatureToleranceSeconds = 300;
     private int maxAttempts = 5;
     public boolean isEnabled() { return enabled; } public void setEnabled(boolean enabled) { this.enabled = enabled; }
@@ -18,6 +19,7 @@ public class SlackProperties {
     public String getBotToken() { return botToken; } public void setBotToken(String value) { botToken = value; }
     public String getTeamId() { return teamId; } public void setTeamId(String value) { teamId = value; }
     public String getFounderUserId() { return founderUserId; } public void setFounderUserId(String value) { founderUserId = value; }
+    public String getAdminToken() { return adminToken; } public void setAdminToken(String value) { adminToken = value; }
     public long getSignatureToleranceSeconds() { return signatureToleranceSeconds; } public void setSignatureToleranceSeconds(long value) { signatureToleranceSeconds = value; }
     public int getMaxAttempts() { return maxAttempts; } public void setMaxAttempts(int value) { maxAttempts = value; }
     public void requireConfigured() {

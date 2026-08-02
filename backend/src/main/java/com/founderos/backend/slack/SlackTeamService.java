@@ -9,6 +9,8 @@ import com.founderos.backend.service.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 @Service
 public class SlackTeamService {
@@ -25,6 +27,10 @@ public class SlackTeamService {
         this.agents = agents; this.bindings = bindings; this.projects = projects; this.tasks = tasks; this.decisions = decisions; this.actions = actions; this.outbox = outbox; this.properties = properties; this.mapper = mapper;
     }
     public List<AgentView> agents() { return agents.findByActiveTrueOrderByDisplayNameAsc().stream().map(AgentView::of).toList(); }
+    public void authorizeAdmin(String token) {
+        String expected = properties.getAdminToken();
+        if (expected == null || expected.isBlank() || token == null || !MessageDigest.isEqual(expected.getBytes(StandardCharsets.UTF_8), token.getBytes(StandardCharsets.UTF_8))) throw new SlackSecurityException("Invalid FounderOS Slack admin token");
+    }
     @Transactional
     public ChannelBindingView bind(String channelId, BindChannelRequest request) {
         requireConfiguredTeam();
