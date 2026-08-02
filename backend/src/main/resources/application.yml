@@ -18,4 +18,11 @@ management:
         include: health
 orchestrator:
   base-url: ${ORCHESTRATOR_BASE_URL:http://localhost:8000}
-
+slack:
+  enabled: ${SLACK_ENABLED:false}
+  signing-secret: ${SLACK_SIGNING_SECRET:}
+  bot-token: ${SLACK_BOT_TOKEN:}
+  team-id: ${SLACK_TEAM_ID:}
+  founder-user-id: ${SLACK_FOUNDER_USER_ID:}
+  signature-tolerance-seconds: ${SLACK_SIGNATURE_TOLERANCE_SECONDS:300}
+  max-attempts: ${SLACK_MAX_ATTEMPTS:5}
