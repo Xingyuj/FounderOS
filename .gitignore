@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.idea/
+.vscode/
+*.iml
+backend/target/
+orchestrator/.venv/
+orchestrator/.pytest_cache/
+orchestrator/**/__pycache__/
+*.pyc
+*.log

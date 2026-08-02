@@ -1,0 +1,21 @@
+server:
+  port: ${BACKEND_PORT:8080}
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:founder_os}
+    username: ${POSTGRES_USER:founder_os}
+    password: ${POSTGRES_PASSWORD:founder_os}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+orchestrator:
+  base-url: ${ORCHESTRATOR_BASE_URL:http://localhost:8000}
+
