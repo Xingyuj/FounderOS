@@ -2,7 +2,7 @@
 
 ## State
 
-FounderOS M1 remains complete. The local M2 Slack Team Experience is implemented and automated tests pass as of 2026-08-02. Real Slack installation and delivery remain unverified because this session had no Slack credentials or public HTTPS callback.
+FounderOS M1 and local M2 remain complete. The M3A frontend implementation and automated release proof are complete as of 2026-08-06. One moderated founder walkthrough remains before the product-validation release gate can be truthfully closed. Real Slack installation remains separately unverified because no credentials or public HTTPS callback were supplied.
 
 ## Work completed
 
@@ -16,6 +16,11 @@ FounderOS M1 remains complete. The local M2 Slack Team Experience is implemented
 - Verified Slack Events and Interactions ingress with replay, workspace, founder, bot-loop, malformed-payload, and duplicate-delivery controls.
 - Deterministic Chief-of-Staff/functional-channel/DM persona routing and restart-safe outbound post/update delivery.
 - Slack manifest, setup guide, admin-token-protected configuration APIs, and M2 integration proof.
+- React/TypeScript product application with Command Center, Content Studio, and Organization Studio.
+- Typed mock product contracts and a stateful MSW content-review scenario.
+- Founder decision confirmation, content evidence/review/version inspection, production/audit modes, and React Flow organization canvas.
+- Frontend accessibility states, responsive behavior, component tests, and a browser-critical founder journey.
+- Character-first team cards plus a Talent Library that creates unassigned Souls. Vacant Positions select from available talent in Organization Studio, where appointment alone creates the Assignment.
 
 ## Commands and exact results
 
@@ -27,21 +32,30 @@ FounderOS M1 remains complete. The local M2 Slack Team Experience is implemented
 - Restart proof — PASS: waiting project `0f25cf3d-e99e-409c-9eab-2811b8653337` resumed to COMPLETED after stopping and restarting both application processes.
 - `cd backend && ./mvnw test` after M2 — PASS, 8 tests total, including 3 Slack integration tests against PostgreSQL 16.
 - `cd orchestrator && .venv/bin/pytest -q` after M2 — PASS, 3 tests; the existing upstream warning remains.
+- `cd frontend && npm run lint` — PASS.
+- `cd frontend && npm run typecheck` — PASS.
+- `cd frontend && npm test` — PASS, 6 tests after the character-first revision.
+- `cd frontend && npm run build` — PASS.
+- `cd frontend && npm run test:e2e` — PASS, 2 Chromium journeys including employee hiring.
+- Regression verification: backend 8 tests PASS; orchestrator 3 tests PASS with the existing warning.
 
 ## Files changed
 
-Implementation lives under `backend/`, `orchestrator/`, and `scripts/`; repository configuration is in `.gitignore`, `.env.example`, and `docker-compose.yml`; product and operational documentation is under `README.md` and `docs/`.
+M3A implementation lives under `frontend/`. Existing runtime implementation remains under `backend/`, `orchestrator/`, and `scripts/`. Repository exclusions, root README, architecture/API/milestone/progress docs, and `.ai` operational records were updated.
 
 ## Known limitations
 
-- Deterministic content only; no LLM, authentication, UI, notification channel, or deployment configuration.
+- Runtime agent content remains deterministic; there is no LLM, product authentication, external deployment, or general notification channel.
 - Synchronous coordination marks failed runs for audit but has no automatic retry/reconciliation.
 - `start-local.sh` requires a prepared Python 3.12+ virtual environment.
 - The installed LangGraph version emits a non-failing pending-deprecation warning from its serializer defaults.
 - Real Slack callbacks and Web API delivery have not been exercised; the test suite uses Slack-compatible signed payloads and a mocked Web API client.
 - M2 personas create durable assignments and acknowledgements but do not yet perform independent LLM reasoning or tool work; that is M3.
 - M1 public HTTP APIs remain trusted-local interfaces without general user authentication.
+- M3A organization/content reads are realistic mock product contracts, not Spring endpoints; production persistence begins in M3B.
+- The roadmap-required moderated walkthrough needs a human participant and remains uncompleted.
+- Reassignment continuity is specified but not implemented: WorkTask still needs stable Position accountability, Assignment history, immutable handoff snapshots, context reconstruction, and checkpoint-safe resume under DEC-020.
 
 ## Exact next action
 
-Install `slack-app-manifest.yml`, configure the Slack environment values, expose the backend ingress endpoints through a public HTTPS URL, bind `#founder-desk` plus functional/project channels, and run real channel, DM, and decision-button smoke paths. Do not begin M3 until any real-payload integration differences are repaired.
+Align the M3A character UI with DEC-019 by removing employee levels and capability-like Soul statistics such as `+2 Insight`. Then run the moderated founder walkthrough and freeze the M3B organization API contract before adding persistence. Real Slack verification may proceed independently when credentials become available.

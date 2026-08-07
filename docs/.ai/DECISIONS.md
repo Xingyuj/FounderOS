@@ -83,3 +83,53 @@ Slack ingress persists a unique event before acknowledgement. Separate database-
 **Status:** Implemented
 
 The app requests only `app_mentions:read`, `channels:history`, `groups:history`, `im:history`, and `chat:write`. It does not request `chat:write.public`; the founder must explicitly invite FounderOS to working channels and then bind their immutable Slack IDs in FounderOS.
+
+## DEC-015 — M3A contract-driven mock boundary
+
+**Status:** Implemented
+
+M3A uses one typed frontend API client in both mock and future real modes. Mock Service Worker intercepts product API calls at the HTTP boundary, owns mutation state, and contains no Slack administration DTOs. Components do not import server fixtures. Mock mode is visibly labelled and can be disabled; M3B will replace only the reviewed organization slice.
+
+## DEC-016 — Productive frontend vocabulary and truthful state
+
+**Status:** Implemented
+
+Job, Soul, Position, and Assignment remain separate in TypeScript types and product copy. The Organization canvas treats coordinates as presentation state and explicitly states that dragging cannot change authority. Content activity, evidence conflicts, failed checks, and model/tool absence are shown truthfully rather than simulated as agent theatre.
+
+## DEC-017 — Character-first game feel
+
+**Status:** Implemented by founder direction
+
+Employees are presented as collectible characters with a portrait, archetype, style traits, status, and current quest. Employee levels are excluded because they imply capability differences. Creating an employee creates only a Soul in the available talent pool. Positions are created independently, and appointing available talent to a vacant Position creates the Assignment. Game presentation may increase attachment and clarity, but it cannot imply capabilities, work, or authority that do not exist.
+
+## DEC-018 — Talent, Position, and appointment are separate lifecycles
+
+**Status:** Implemented by founder direction
+
+A Soul may exist without a Position. A Position may remain vacant without a Soul. Only an explicit appointment command connects them through an Assignment. The Talent Library owns character creation and bench visibility; Organization Studio owns vacancy context and initiates appointment from available talent.
+
+## DEC-019 — Soul cannot affect professional competence or output quality
+
+**Status:** Approved by founder
+
+FounderOS is a productivity system first. Job Definition and Task Contract supply professional competence, required execution method, tools, validators, evidence rules, output schema, completion conditions, and quality thresholds. Every Soul appointed to the same Position must be equally capable of satisfying those requirements.
+
+Soul is limited to identity, visual character, voice, communication style, and preferences among equally valid non-material alternatives. It cannot skip steps, weaken research or fact checking, change calculations, reduce review, alter permissions, bypass approval, or trade correctness for personality. The product must not expose employee levels, and it must not represent Soul style traits as intelligence, speed, reliability, quality, or other capability scores.
+
+Required runtime invariant:
+
+```text
+Same Job + Same Task Contract + Different Soul
+=> identical competence, workflow, evidence, validation, authority, and quality floor
+=> only compliant presentation style may differ
+```
+
+## DEC-020 — Project memory survives reassignment
+
+**Status:** Approved by founder
+
+Authoritative work memory belongs to Project, Position, WorkTask, WorkflowRun, FounderDecision, Artifact, Evidence, Activity, and checkpoint records; it never belongs exclusively to the currently appointed Soul. WorkTask accountability is stable through `accountablePositionId`, while `currentAssignmentId` identifies the executing Soul and Assignment history preserves attribution over time.
+
+Reassignment is an explicit, transactional lifecycle operation. It ends the previous Assignment, records an immutable handoff snapshot, creates the new Assignment, and emits an auditable reassignment event. The handoff snapshot contains current objective, completed work, active work, remaining actions, blockers, risks, decisions, Artifact and Evidence references, workflow thread/checkpoint, and the exact next action. It is a readable index, not a replacement for authoritative records.
+
+The new Agent Instance reconstructs context from the Project, Position playbook, Task Contract, authoritative records, and the existing workflow checkpoint, then resumes from the same durable work state. Relevant work knowledge must be attached to Project or Task before an Assignment ends. Soul-specific relationship or communication preferences may follow the Soul but cannot change project facts, progress, or quality requirements.

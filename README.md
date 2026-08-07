@@ -1,6 +1,6 @@
 # FounderOS
 
-FounderOS is a durable, human-in-the-loop operating system for a one-person company. Milestone 1 proves the HTTP path from a project idea, through a persisted founder decision and workflow interrupt, to a stored Product Brief.
+FounderOS is a durable, human-in-the-loop operating system for a one-person company. M1 and M2 prove durable HTTP and Slack control flow. M3A adds a frontend-first product prototype for understanding the company, resolving decisions, inspecting content production, and arranging the organization.
 
 ## Architecture
 
@@ -12,6 +12,7 @@ The Spring Boot service on port 8080 owns Project, FounderDecision, WorkflowRun,
 - Docker with Compose
 - Python 3.12+
 - `curl` and `jq`
+- Node.js 22+ for the M3A frontend
 
 ## Run locally
 
@@ -34,13 +35,24 @@ Individual test suites:
 ```bash
 cd backend && ./mvnw test
 cd orchestrator && .venv/bin/pytest
+cd frontend && npm run lint && npm run typecheck && npm test && npm run build
 ```
+
+The frontend runs independently against typed mock APIs:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open `http://localhost:5173`. See the [frontend guide](frontend/README.md) for scenarios and browser tests.
 
 ## Known limitations
 
 Agent responses remain deterministic; specialist LLM reasoning, autonomous tools, general user authentication, and deployment configuration are deferred. Slack supports one allow-listed workspace and founder, uses environment-based credentials for local operation, and requires a public HTTPS callback for real workspace use. Backend-to-orchestrator coordination is still synchronous; Slack transport itself is isolated through restart-safe PostgreSQL inbox/outbox queues.
 
-See [architecture](docs/architecture.md), [API](docs/api.md), and [milestones](docs/milestones.md).
+See [architecture](docs/architecture.md), [API](docs/api.md), [milestones](docs/milestones.md), and the [frontend roadmap](docs/FOUNDER_OS_FRONTEND_ROADMAP.md).
 
 ## Milestone 2 Slack team
 

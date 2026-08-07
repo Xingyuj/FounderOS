@@ -2,50 +2,50 @@
 
 ## Objective
 
-Define Milestone 2 as a Slack Team Experience in which the founder collaborates through functional/project channels and direct messages with a small agent team coordinated by a Chief of Staff.
+Deliver Milestone 3A Frontend Experience Discovery: a realistic, typed-mock FounderOS product experience spanning Command Center, Content Studio, and Organization Studio.
 
 ## Current status
 
-M1 remains complete. The local M2 Slack Team Experience implementation is complete and automated tests pass. Real Slack workspace installation and delivery remain unverified because credentials and a public HTTPS callback were not available.
+M1 remains complete. The local M2 Slack Team Experience remains complete. The M3A application, automated tests, production build, and Chromium journey are complete. The required moderated founder walkthrough remains a human validation gate; real Slack workspace installation also remains externally blocked.
 
 ## Implementation plan
 
-1. Bootstrap repository configuration, PostgreSQL Compose service, Maven/Spring Boot backend, and Python/FastAPI orchestrator.
-2. Add Flyway-owned business schema, domain services, RFC 7807 APIs, and backend-to-orchestrator coordination.
-3. Implement the deterministic LangGraph interrupt/resume workflow with PostgreSQL checkpoint persistence.
-4. Add backend unit/integration tests and orchestrator workflow/API tests.
-5. Start PostgreSQL and both services, execute the HTTP smoke test including negative/idempotency checks, and repair failures.
-6. Align README/API/architecture/milestone/progress documentation and complete all `.ai` operational records with evidence.
+1. Bootstrap the React/TypeScript application and quality commands.
+2. Define product vocabulary, shared DTOs, API client, and stateful HTTP mocks.
+3. Implement the Command Center, founder decision flow, and truthful activity view.
+4. Implement Content Studio evidence, review, versions, and audit views.
+5. Implement Organization Studio canvas, vacancy, and vocabulary guidance.
+6. Add component and browser journeys, run regression suites, and align documentation.
 
 ## Recommended execution sequence
 
-1. Repository skeleton and developer tooling.
-2. Docker Compose PostgreSQL.
-3. Spring Boot domain model, Flyway migrations, APIs, and tests.
-4. FastAPI/LangGraph pause-resume workflow and checkpoint persistence.
-5. Backend-to-orchestrator coordination.
-6. End-to-end smoke test.
-7. Documentation and final handoff.
+1. Conduct the moderated product walkthrough.
+2. Record findings without expanding secondary screens.
+3. Accept or revise the four-term product vocabulary.
+4. Freeze the first M3B organization API contract.
+5. Only then begin the additive organization persistence migration.
 
 ## Completion target
 
-The founder can create a project over HTTP, observe a persisted open decision, resolve it later, and receive exactly one stored Product Brief after the workflow resumes.
+The founder can understand company state quickly, resolve the blocking content decision, inspect evidence/reviews/artifact versions, distinguish Job/Soul/Position/Assignment, and see a vacant Position in a realistic mock company.
 
 ## Verification evidence
 
-- `cd backend && ./mvnw clean test`: 5 passed.
-- `cd orchestrator && .venv/bin/pytest`: 3 passed; one upstream LangGraph pending-deprecation warning.
-- `POSTGRES_PORT=55432 docker compose up -d postgres`: healthy PostgreSQL 16 (alternate port used because an unrelated existing container owns host port 5432).
-- `./scripts/smoke-test.sh`: PASS with project `6ed929bd-a3b8-4945-a221-5118cd73dbcc` and matching persisted workflow thread.
-- Restart proof: project `0f25cf3d-e99e-409c-9eab-2811b8653337` paused, both application processes restarted, then decision `fcb7b9b2-3b82-4b91-868b-993a2882cbb9` resumed to COMPLETED.
+- Frontend lint and type-check: PASS.
+- Frontend Vitest: 5 passed.
+- Frontend production build: PASS.
+- Playwright Chromium founder journey: 1 passed.
+- Backend regression suite: 8 passed.
+- Orchestrator regression suite: 3 passed with one existing upstream pending-deprecation warning.
 
-## M2 implementation choices
+## M3A implementation choices
 
-- One FounderOS Slack App represents five visible agent personas; DMs select a specialist through an explicit English or Chinese role prefix and otherwise route to Chief of Staff.
-- No slash command is required. M2 uses channel messages, app mentions, DMs, and interactive decision buttons.
-- Bot scopes are `app_mentions:read`, `channels:history`, `groups:history`, `im:history`, and `chat:write`; the app must be invited into every working channel.
-- PostgreSQL inbox/outbox workers provide asynchronous processing, idempotency, retry, and restart recovery without Redis or Kafka.
+- One API client serves mock and future real product APIs.
+- MSW owns mock transport and mutable scenario state; feature components do not import server fixtures.
+- Organization layout remains explicitly separate from authority and reporting semantics.
+- Production and audit views separate daily work from execution detail.
+- Mock data is visibly labelled and never presented as live agent execution.
 
 ## Exact next task
 
-Install the manifest in the founder's Slack workspace, configure `SLACK_SIGNING_SECRET`, `SLACK_BOT_TOKEN`, `SLACK_TEAM_ID`, `SLACK_FOUNDER_USER_ID`, and `SLACK_ADMIN_TOKEN`, expose the two signed ingress endpoints over HTTPS, bind initial channels, and run a real Slack smoke test.
+Run one moderated founder walkthrough of the M3A storyline, record usability findings, then review and freeze the smallest M3B organization contract (`GetOrganization`, `ListJobDefinitions`, `ListSoulDefinitions`, `CreatePosition`, `AppointSoulToPosition`, and `UpdateOrganizationLayout`). Do not start Flyway organization migrations until that review is complete.

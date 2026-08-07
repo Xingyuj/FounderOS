@@ -6,13 +6,13 @@ FounderOS is a human-in-the-loop operating system for a one-person company. A fo
 
 ## Current milestone
 
-Milestone 1: Idea -> Founder Decision -> Product Brief.
+Milestone 3A: Frontend Experience Discovery.
 
-This milestone is infrastructure validation, not a complete multi-agent product. Deterministic workflow logic is acceptable. Slack, WhatsApp, model routing, autonomous engineering, and a web UI are deliberately deferred.
+M1 and local M2 are complete. M3A validates the Command Center, Content Studio, Organization Studio, product vocabulary, and typed mock contracts before the first organization persistence migration. Real Slack workspace verification remains an independent external integration task.
 
 ## Implemented state
 
-Milestone 1 is implemented as a Spring Boot public API and a FastAPI/LangGraph internal orchestrator. PostgreSQL `public` contains Flyway-managed authoritative business tables; the `langgraph` schema contains durable execution checkpoints. The HTTP pause/resume path, negative decision cases, and process-restart recovery have been verified locally.
+Milestone 1 is implemented as a Spring Boot public API and a FastAPI/LangGraph internal orchestrator. M2 adds durable Slack inbox/outbox routing. M3A adds a React/TypeScript frontend using typed product contracts and MSW scenarios; it deliberately does not change backend authority or persistence. Automated frontend component, decision, content-inspection, production-build, and browser journeys pass.
 
 ## Repository
 
@@ -34,10 +34,13 @@ Expected local path: `~/workspace/FounderOS`
 - Pydantic v2
 - pytest/httpx
 - Docker Compose
+- React, TypeScript, Vite, TanStack Query, React Flow, MSW, Vitest, and Playwright
 
 ## Architectural intent
 
 Spring Boot owns durable business records and public APIs. Python/LangGraph owns workflow execution and checkpoints. PostgreSQL is the durable store. The implementation should remain small enough to replace or extend individual pieces later.
+
+Job Definition and Task Contract own professional competence and output quality. Soul is limited to identity and compliant presentation style. Appointing a different Soul must never weaken workflow steps, tools, evidence, validation, permissions, approvals, or quality thresholds.
 
 ## Deferred capabilities
 
